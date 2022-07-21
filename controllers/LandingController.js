@@ -8,7 +8,7 @@ recordRoutes.get("/mark", async function (req, res) {
 
   const result = await client
     .db("Marketing")
-    .collection("Texts")
+    .collection("Marketing_Details")
     .findOne({ name: nameOfMark });
 
   if (result) {
