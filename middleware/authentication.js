@@ -1,6 +1,5 @@
-const express = require("express");
-
-function validateAuthentication(req, res, next) {
+// eslint-disable-next-line consistent-return
+function validateAuthentication(req, res) {
   const authHeader = req.get('Authorization');
   if (!authHeader) {
     return res.status(401).send({
@@ -11,4 +10,3 @@ function validateAuthentication(req, res, next) {
 }
 
 module.exports = validateAuthentication;
-  

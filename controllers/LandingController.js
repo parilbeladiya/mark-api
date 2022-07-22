@@ -1,22 +1,25 @@
-const express = require("express");
+const express = require('express');
+
 const recordRoutes = express.Router();
-const connetToMongoDB = require("../lib/db");
+const connetToMongoDB = require('../lib/db');
 
-recordRoutes.get("/mark", async function (req, res) {
+recordRoutes.get('/mark', async (req, res) => {
   const client = await connetToMongoDB();
-  const nameOfMark = req.header('name');
+  const nameOfMark = req.query.name;
 
-  const result = await client
-    .db("Marketing")
-    .collection("Marketing_Details")
-    .findOne({ name: nameOfMark });
+  if (nameOfMark && nameOfMark.length > 1) {
+    const result = await client
+      .db('Marketing')
+      .collection('Marketing_Details')
+      .findOne({ name: nameOfMark });
 
-  if (result) {
-    console.log(`Found a Record '${nameOfMark}':`);
-    console.log(result);
-    res.send(result);
+    if (result) {
+      res.send(result);
+    } else {
+      res.send(`No Record Found '${nameOfMark}'`);
+    }
   } else {
-    console.log(`No Record Found '${nameOfMark}'`);
+    res.send('Error occured, Please pass name for get data');
   }
 });
 
